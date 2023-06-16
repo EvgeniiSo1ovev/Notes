@@ -1,11 +1,11 @@
-from .commands.new_text_note import NewTextNote
-from .commands.edit_text_note import EditTextNote
-from .commands.delete_text_note import DeleteTextNote
-from .commands.print_note_list import PrintNoteList
-from .commands.print_text_note import PrintTextNote
-from .commands.load_from_file import LoadFromFile
-from .commands.save_to_file import SaveToFile
-from .commands.quit import Quit
+from ui.commands.new_text_note import NewTextNote
+from ui.commands.edit_text_note import EditTextNote
+from ui.commands.delete_text_note import DeleteTextNote
+from ui.commands.print_note_list import PrintNoteList
+from ui.commands.print_text_note import PrintTextNote
+from ui.commands.load_from_file import LoadFromFile
+from ui.commands.save_to_file import SaveToFile
+from ui.commands.quit import Quit
 
 
 
@@ -28,7 +28,7 @@ class Menu:
         return self.__main_commands[n_menu - 1].execute()
 
     def print_main_commands(self):
-        result = "Введите что хотите сделать:"
+        result = "Введите что хотите сделать:\n"
         for i, el in enumerate(self.__main_commands, 1):
-            result += f"\n{i}. {el.get_description()}"
+            result += f"{i}. {el.get_description()}\n"
         return result

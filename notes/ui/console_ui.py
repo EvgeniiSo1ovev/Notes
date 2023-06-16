@@ -1,4 +1,4 @@
-from notes.ui.menu import Menu
+from ui.menu import Menu
 import datetime
 import inline
 

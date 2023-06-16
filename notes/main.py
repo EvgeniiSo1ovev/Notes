@@ -1,6 +1,9 @@
-from .presenter.presenter import Presenter
-from .ui.console_ui import ConsoleUI
-from .notes_api.notes import Notes
+import os
+import sys
+sys.path.append(os.getcwd())
+from presenter.presenter import Presenter
+from ui.console_ui import ConsoleUI
+from notes_api.notes import Notes
 
 console_ui = ConsoleUI()
 Presenter(console_ui, Notes([]))

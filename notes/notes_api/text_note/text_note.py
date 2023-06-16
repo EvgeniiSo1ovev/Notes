@@ -1,4 +1,4 @@
-from ..note.note import Note
+from notes_api.note.note import Note
 
 
 class TextNote(Note):

@@ -1,4 +1,4 @@
-from ..notes_api.notes import Notes
+from notes_api.notes import Notes
 
 
 class Presenter:

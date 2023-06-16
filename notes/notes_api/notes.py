@@ -1,5 +1,5 @@
-from .handler.file_handler import FileHandler
-from .text_note.text_note import TextNote
+from notes_api.handler.file_handler import FileHandler
+from notes_api.text_note.text_note import TextNote
 
 
 class Notes:
@@ -14,6 +14,9 @@ class Notes:
     def get_unique_id(self):
         return self.__unique_id
 
+    def set_unique_id(self):
+        self.__unique_id += 1
+
     def find_text_note(self, nid):
         for el in self.get_note_list():
             if el.get_id == nid:
@@ -26,9 +29,10 @@ class Notes:
     def add_text_note(self, title, text, date_time):
         try:
             self.get_note_list().append(TextNote(self.get_unique_id(), title, text, date_time))
+            self.set_unique_id()
             return True
         except Exception as e:
-            FileHandler.check_errors(e)
+            FileHandler().check_errors(e)
             return False
 
     def edit_text_note(self, nid, title, text, date_time):
@@ -39,7 +43,7 @@ class Notes:
             text_note.set_date_time(date_time)
             return True
         except Exception as e:
-            FileHandler.check_errors(e)
+            FileHandler().check_errors(e)
             return False
 
     def delete_text_note(self, nid):
@@ -47,14 +51,14 @@ class Notes:
             self.get_note_list().remove(self.find_text_note(nid))
             return True
         except Exception as e:
-            FileHandler.check_errors(e)
+            FileHandler().check_errors(e)
             return False
 
     def get_content_text_note(self, nid):
         return self.find_text_note(nid).to_dict()
 
     @staticmethod
-    def to_dicts_list(note_list=get_note_list()):
+    def to_dicts_list(note_list):
         result = []
         for el in note_list:
             result.append(el.to_dict())
@@ -68,35 +72,19 @@ class Notes:
         return result
 
     def load(self, file_name):
-        objs = FileHandler.read_from_json(file_name)
+        objs = FileHandler().read_from_json(file_name)
         return None if objs == None else self.to_text_note(objs.get('notes')), objs.get('unique_id')
 
     def save(self, file_name):
-        f_h = FileHandler()
-        return f_h.write_to_json(file_name, self.to_dicts_list())
+        objs = {"notes": self.to_dicts_list(self.get_note_list()), "unique_id": self.get_unique_id()}
+        return FileHandler().write_to_json(file_name, objs)
 
     def get_filter(self, begin_date_time, end_date_time):
         result = []
         for t_n in self.get_note_list():
-            if begin_date_time <= t_n.get("date_time") <= end_date_time:
+            if begin_date_time <= t_n.get_date_time() <= end_date_time:
                 result.append(t_n)
         return result
 
     def get_filtered_dicts_list(self, begin_date_time, end_date_time):
         return self.to_dicts_list(self.get_filter(begin_date_time, end_date_time))
-
-    @staticmethod
-    def print_short_info(note_list=get_note_list()):
-        result = ""
-        for t_n in note_list:
-            result += f"\n{t_n.print_short_info()}"
-            result += "\n------------------------"
-        return result
-
-    @staticmethod
-    def print_all_info(note_list=get_note_list()):
-        result = ""
-        for t_n in note_list:
-            result += f"\n{t_n.print_all_info()}"
-            result += "\n------------------------"
-        return result

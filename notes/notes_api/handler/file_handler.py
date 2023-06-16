@@ -23,6 +23,6 @@ class FileHandler:
     def check_errors(e):
         with open('errors.json', encoding='utf-8') as err_f:
             objs = json.load(err_f)
-            objs.get('errors').append(e)
+            objs.get('errors').append(str(e))
         with open('errors.json', 'w', encoding='utf-8') as err_f:
             json.dump(objs, err_f, indent=4)

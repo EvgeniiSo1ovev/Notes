@@ -1,4 +1,4 @@
-from .command import Command
+from ui.commands.command import Command
 
 
 class PrintTextNote(Command):
