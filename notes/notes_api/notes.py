@@ -73,18 +73,28 @@ class Notes:
 
     def load(self, file_name):
         objs = FileHandler().read_from_json(file_name)
-        return None if objs == None else self.to_text_note(objs.get('notes')), objs.get('unique_id')
+        return None if objs == None else [self.to_text_note(objs.get('notes')), objs.get('unique_id')]
 
     def save(self, file_name):
         objs = {"notes": self.to_dicts_list(self.get_note_list()), "unique_id": self.get_unique_id()}
-        return FileHandler().write_to_json(file_name, objs)
+        f_h = FileHandler()
+        return f_h.write_to_json(file_name, objs)
 
-    def get_filter(self, begin_date_time, end_date_time):
+    # def get_filter(self, begin_date_time, end_date_time):
+    #     result = []
+    #     for t_n in self.get_note_list():
+    #         if begin_date_time <= t_n.get_date_time() <= end_date_time:
+    #             result.append(t_n)
+    #     return result
+
+    def get_filter(self):
         result = []
         for t_n in self.get_note_list():
-            if begin_date_time <= t_n.get_date_time() <= end_date_time:
-                result.append(t_n)
+            result.append(t_n)
         return result
 
-    def get_filtered_dicts_list(self, begin_date_time, end_date_time):
-        return self.to_dicts_list(self.get_filter(begin_date_time, end_date_time))
+    # def get_filtered_dicts_list(self, begin_date_time, end_date_time):
+    #     return self.to_dicts_list(self.get_filter(begin_date_time, end_date_time))
+
+    def get_filtered_dicts_list(self):
+        return self.to_dicts_list(self.get_filter())

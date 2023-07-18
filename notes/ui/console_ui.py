@@ -29,6 +29,8 @@ class ConsoleUI:
                 print("Введен неверный пункт меню.")
         except ValueError:
             print("Введено что-то отличное от пунктов меню.")
+        finally:
+            print("\n")
 
     def quit(self):
         self.__work = False
@@ -38,8 +40,8 @@ class ConsoleUI:
         text = input("Введите тело заметки: ")
         date_time = datetime.datetime
         if self.get_presenter().add_text_note(title, text, date_time):
-            msg = "Заметка добавлена в список заметок. " \
-                  "\n Список заметок готов для дальнейшего сохранения в файл."
+            msg = "Заметка добавлена в список заметок." \
+                  "\nСписок заметок готов для дальнейшего сохранения в файл."
         else:
             msg = "Ошибка! Заметка не добавлена в список заметок."
         print(msg)
@@ -56,8 +58,8 @@ class ConsoleUI:
                                     "\n", inp=content_text_note.get("text"))
                 date_time = datetime.datetime
                 if self.get_presenter().edit_text_note(nid, title, text, date_time):
-                    msg = "Заметка отредактирована и добавлена в список заметок.\n " \
-                          "Список заметок готов для дальнейшего сохранения в файл."
+                    msg = "Заметка отредактирована и добавлена в список заметок." \
+                          "\nСписок заметок готов для дальнейшего сохранения в файл."
                 else:
                     msg = "Ошибка редактирования."
                 print(msg)
@@ -72,8 +74,8 @@ class ConsoleUI:
             nid = int(user_input)
             if self.get_presenter().is_find_text_note(nid):
                 if self.get_presenter().delete_text_note(nid):
-                    msg = "Заметка удалена из списка заметок.\n " \
-                          "Список заметок готов для дальнейшего сохранения в файл."
+                    msg = "Заметка удалена из списка заметок." \
+                          "\nСписок заметок готов для дальнейшего сохранения в файл."
                 else:
                     msg = "Ошибка удаления."
                 print(msg)
@@ -97,10 +99,11 @@ class ConsoleUI:
         print(msg)
 
     def print_note_list(self):
-        begin_date_time = input("Введите начало периода создания/изменения заметок: ")
-        end_date_time = input("Введите окончание периода создания/изменения заметок: ")
+        # begin_date_time = input("Введите начало периода создания/изменения заметок: ")
+        # end_date_time = input("Введите окончание периода создания/изменения заметок: ")
         result = ""
-        for t_n in self.get_presenter().get_filtered_notes(begin_date_time, end_date_time):
+        # for t_n in self.get_presenter().get_filtered_notes(begin_date_time, end_date_time):
+        for t_n in self.get_presenter().get_filtered_notes():
             result += f"\nИндивидуальный номер: {t_n.get('id')}" \
                       f"\nЗаголовок заметки: {t_n.get('title')}"
             result += "\n------------------------"

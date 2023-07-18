@@ -32,8 +32,11 @@ class Presenter:
     def get_content_text_note(self, nid):
         return self.get_notes().get_content_text_note(nid)
 
-    def get_filtered_notes(self, begin_date_time, end_date_time):
-        return self.get_notes().get_filtered_dicts_list(begin_date_time, end_date_time)
+    # def get_filtered_notes(self, begin_date_time, end_date_time):
+    #     return self.get_notes().get_filtered_dicts_list(begin_date_time, end_date_time)
+
+    def get_filtered_notes(self):
+        return self.get_notes().get_filtered_dicts_list()
 
     def load(self, file_name):
         objs = self.get_notes().load(file_name)
