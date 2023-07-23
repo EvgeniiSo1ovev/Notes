@@ -17,8 +17,8 @@ class Presenter:
     def get_console_ui(self):
         return self.__console_ui
 
-    def add_text_note(self, title, text, date_time):
-        return self.get_notes().add_text_note(title, text, date_time)
+    def add_text_note(self, title, text):
+        return self.get_notes().add_text_note(title, text)
 
     def edit_text_note(self, nid, title, text, date_time):
         return self.get_notes().edit_text_note(nid, title, text, date_time)
@@ -32,11 +32,11 @@ class Presenter:
     def get_content_text_note(self, nid):
         return self.get_notes().get_content_text_note(nid)
 
-    # def get_filtered_notes(self, begin_date_time, end_date_time):
-    #     return self.get_notes().get_filtered_dicts_list(begin_date_time, end_date_time)
+    def get_filtered_notes(self, begin_date_time, end_date_time):
+        return self.get_notes().get_filtered_dicts_list(begin_date_time, end_date_time)
 
-    def get_filtered_notes(self):
-        return self.get_notes().get_filtered_dicts_list()
+    # def get_filtered_notes(self):
+    #     return self.get_notes().get_filtered_dicts_list()
 
     def load(self, file_name):
         objs = self.get_notes().load(file_name)

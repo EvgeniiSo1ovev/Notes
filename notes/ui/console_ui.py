@@ -1,5 +1,5 @@
 from ui.menu import Menu
-import datetime
+from datetime import datetime
 import inline
 
 
@@ -20,9 +20,8 @@ class ConsoleUI:
             self.main_requests()
 
     def main_requests(self):
-        user_input = input(self.__menu.print_main_commands())
         try:
-            n_menu = int(user_input)
+            n_menu = int(input(self.__menu.print_main_commands()))
             if 0 < n_menu <= self.__menu.get_size_main_commands():
                 self.__menu.execute_main_commands(n_menu)
             else:
@@ -38,8 +37,7 @@ class ConsoleUI:
     def new_text_note(self):
         title = input("Введите заголовок заметки: ")
         text = input("Введите тело заметки: ")
-        date_time = datetime.datetime
-        if self.get_presenter().add_text_note(title, text, date_time):
+        if self.get_presenter().add_text_note(title, text):
             msg = "Заметка добавлена в список заметок." \
                   "\nСписок заметок готов для дальнейшего сохранения в файл."
         else:
@@ -47,17 +45,14 @@ class ConsoleUI:
         print(msg)
 
     def edit_text_note(self):
-        user_input = input("Введите индивидуальный номер (id) заметки: ")
         try:
-            nid = int(user_input)
+            nid = int(input("Введите индивидуальный номер (id) заметки: "))
+            print(type(nid))
             if self.get_presenter().is_find_text_note(nid):
                 content_text_note = self.get_presenter().get_content_text_note(nid)
-                title = inline.input("Отредактируйте заголовок заметки: "
-                                     "\n", inp=content_text_note.get("title"))
-                text = inline.input("Отредактируйте тело заметки: "
-                                    "\n", inp=content_text_note.get("text"))
-                date_time = datetime.datetime
-                if self.get_presenter().edit_text_note(nid, title, text, date_time):
+                title = inline.input("Отредактируйте заголовок заметки:\n", inp=content_text_note.get("title"))
+                text = inline.input("Отредактируйте тело заметки:\n", inp=content_text_note.get("text"))
+                if self.get_presenter().edit_text_note(nid, title, text):
                     msg = "Заметка отредактирована и добавлена в список заметок." \
                           "\nСписок заметок готов для дальнейшего сохранения в файл."
                 else:
@@ -69,9 +64,8 @@ class ConsoleUI:
             print("Введено что-то отличное от индивидуального номера (id) заметки.")
 
     def delete_text_note(self):
-        user_input = input("Введите индивидуальный номер (id) заметки: ")
         try:
-            nid = int(user_input)
+            nid = int(input("Введите индивидуальный номер (id) заметки: "))
             if self.get_presenter().is_find_text_note(nid):
                 if self.get_presenter().delete_text_note(nid):
                     msg = "Заметка удалена из списка заметок." \
@@ -99,23 +93,26 @@ class ConsoleUI:
         print(msg)
 
     def print_note_list(self):
-        # begin_date_time = input("Введите начало периода создания/изменения заметок: ")
-        # end_date_time = input("Введите окончание периода создания/изменения заметок: ")
-        result = ""
-        # for t_n in self.get_presenter().get_filtered_notes(begin_date_time, end_date_time):
-        for t_n in self.get_presenter().get_filtered_notes():
-            result += f"\nИндивидуальный номер: {t_n.get('id')}" \
-                      f"\nЗаголовок заметки: {t_n.get('title')}"
-            result += "\n------------------------"
-        print(result)
+        try:
+            str_begin_date_time = input("Введите начало периода создания/изменения заметок (ДД.ММ.ГГГГ Час:Мин): ")
+            begin_date_time = datetime.strptime(str_begin_date_time + ":00", '%d.%m.%Y %H:%M:%S')
+            str_end_date_time = input("Введите окончание периода создания/изменения заметок (ДД.ММ.ГГГГ Час:Мин): ")
+            end_date_time = datetime.strptime(str_end_date_time + ":59", '%d.%m.%Y %H:%M:%S')
+            result = "------------------------"
+            for t_n in self.get_presenter().get_filtered_notes(begin_date_time, end_date_time):
+                result += f"\nИндивидуальный номер: {t_n.get('id')}" \
+                          f"\nЗаголовок заметки: {t_n.get('title')}"
+                result += "\n------------------------"
+            print(result)
+        except ValueError:
+            print("Введено что-то отличное от индивидуального номера (id) заметки.")
 
     def print_text_note(self):
-        user_input = input("Введите индивидуальный номер (id) заметки: ")
         try:
-            nid = int(user_input)
+            nid = int(input("Введите индивидуальный номер (id) заметки: "))
             if self.get_presenter().is_find_text_note(nid):
                 content_text_note = self.get_presenter().get_content_text_note(nid)
-                result = "\n------------------------"
+                result = "------------------------"
                 result += f"\nИндивидуальный номер: {content_text_note.get('id')}" \
                           f"\nЗаголовок заметки: {content_text_note.get('title')}" \
                           f"\nТело заметки: {content_text_note.get('text')}" \

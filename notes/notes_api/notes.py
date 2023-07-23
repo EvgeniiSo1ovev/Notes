@@ -1,5 +1,6 @@
 from notes_api.handler.file_handler import FileHandler
 from notes_api.text_note.text_note import TextNote
+from datetime import datetime
 
 
 class Notes:
@@ -26,21 +27,21 @@ class Notes:
     def is_find_text_note(self, nid):
         return False if self.find_text_note(nid) == None else True
 
-    def add_text_note(self, title, text, date_time):
+    def add_text_note(self, title, text):
         try:
-            self.get_note_list().append(TextNote(self.get_unique_id(), title, text, date_time))
+            self.get_note_list().append(TextNote(self.get_unique_id(), title, text, datetime.now()))
             self.set_unique_id()
             return True
         except Exception as e:
             FileHandler().check_errors(e)
             return False
 
-    def edit_text_note(self, nid, title, text, date_time):
+    def edit_text_note(self, nid, title, text):
         try:
             text_note = self.find_text_note(nid)
             text_note.set_title(title)
             text_note.set_text(text)
-            text_note.set_date_time(date_time)
+            text_note.set_date_time(datetime.now())
             return True
         except Exception as e:
             FileHandler().check_errors(e)
@@ -76,25 +77,25 @@ class Notes:
         return None if objs == None else [self.to_text_note(objs.get('notes')), objs.get('unique_id')]
 
     def save(self, file_name):
-        objs = {"notes": self.to_dicts_list(self.get_note_list()), "unique_id": self.get_unique_id()}
+        objs = {'notes': self.to_dicts_list(self.get_note_list()), 'unique_id': self.get_unique_id()}
         f_h = FileHandler()
         return f_h.write_to_json(file_name, objs)
 
-    # def get_filter(self, begin_date_time, end_date_time):
-    #     result = []
-    #     for t_n in self.get_note_list():
-    #         if begin_date_time <= t_n.get_date_time() <= end_date_time:
-    #             result.append(t_n)
-    #     return result
-
-    def get_filter(self):
+    def get_filter(self, begin_date_time, end_date_time):
         result = []
         for t_n in self.get_note_list():
-            result.append(t_n)
+            if begin_date_time <= t_n.get_date_time() <= end_date_time:
+                result.append(t_n)
         return result
 
-    # def get_filtered_dicts_list(self, begin_date_time, end_date_time):
-    #     return self.to_dicts_list(self.get_filter(begin_date_time, end_date_time))
+    # def get_filter(self):
+    #     result = []
+    #     for t_n in self.get_note_list():
+    #         result.append(t_n)
+    #     return result
 
-    def get_filtered_dicts_list(self):
-        return self.to_dicts_list(self.get_filter())
+    def get_filtered_dicts_list(self, begin_date_time, end_date_time):
+        return self.to_dicts_list(self.get_filter(begin_date_time, end_date_time))
+
+    # def get_filtered_dicts_list(self):
+    #     return self.to_dicts_list(self.get_filter())

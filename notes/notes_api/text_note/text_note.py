@@ -5,9 +5,6 @@ class TextNote:
         self.__date_time = date_time
         self.__text = text
 
-    def __get__(self, instance, owner):
-
-
     def get_id(self):
         return self.__id
 
@@ -30,7 +27,11 @@ class TextNote:
         self.__date_time = date_time
 
     # def to_dict(self):
+    #     print({'id': self.get_id, 'title': self.get_title, 'text': self.get_text, 'date_time': self.get_date_time})
     #     return {"id": self.get_id, "title": self.get_title, "text": self.get_text, "date_time": self.get_date_time}
 
     def to_dict(self):
+        dict = {"id": self.__id, "title": self.__title, "text": self.__text, "date_time": self.__date_time}
+        print(type(dict.get("id")))
+        print(dict.get("date_time"))
         return {"id": self.__id, "title": self.__title, "text": self.__text, "date_time": self.__date_time}
