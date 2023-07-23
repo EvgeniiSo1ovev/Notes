@@ -49,8 +49,9 @@ class ConsoleUI:
             nid = int(input("Введите индивидуальный номер (id) заметки: "))
             if self.get_presenter().is_find_text_note(nid):
                 content_text_note = self.get_presenter().get_content_text_note(nid)
-                title = inline.input("Отредактируйте заголовок заметки:\n", inp=content_text_note.get("title"))
-                text = inline.input("Отредактируйте тело заметки:\n", inp=content_text_note.get("text"))
+                i_input = inline.input
+                title = i_input(prefix="Отредактируйте заголовок заметки:\n", inp=content_text_note.get("title"))
+                text = i_input(prefix="Отредактируйте тело заметки:\n", inp=content_text_note.get("text"))
                 if self.get_presenter().edit_text_note(nid, title, text):
                     msg = "Заметка отредактирована и добавлена в список заметок." \
                           "\nСписок заметок готов для дальнейшего сохранения в файл."

@@ -20,9 +20,7 @@ class Notes:
 
     def find_text_note(self, nid):
         for el in self.get_note_list():
-            print(el)
-            print(el.get_id())
-            if el.get_id == nid:
+            if el.get_id() == nid:
                 return el
         return None
 
