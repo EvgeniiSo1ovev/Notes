@@ -20,6 +20,8 @@ class Notes:
 
     def find_text_note(self, nid):
         for el in self.get_note_list():
+            print(el)
+            print(el.get_id())
             if el.get_id == nid:
                 return el
         return None
@@ -88,14 +90,5 @@ class Notes:
                 result.append(t_n)
         return result
 
-    # def get_filter(self):
-    #     result = []
-    #     for t_n in self.get_note_list():
-    #         result.append(t_n)
-    #     return result
-
     def get_filtered_dicts_list(self, begin_date_time, end_date_time):
         return self.to_dicts_list(self.get_filter(begin_date_time, end_date_time))
-
-    # def get_filtered_dicts_list(self):
-    #     return self.to_dicts_list(self.get_filter())

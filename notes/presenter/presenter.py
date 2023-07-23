@@ -20,8 +20,8 @@ class Presenter:
     def add_text_note(self, title, text):
         return self.get_notes().add_text_note(title, text)
 
-    def edit_text_note(self, nid, title, text, date_time):
-        return self.get_notes().edit_text_note(nid, title, text, date_time)
+    def edit_text_note(self, nid, title, text):
+        return self.get_notes().edit_text_note(nid, title, text)
 
     def delete_text_note(self, nid):
         return self.get_notes().delete_text_note(nid)
@@ -34,9 +34,6 @@ class Presenter:
 
     def get_filtered_notes(self, begin_date_time, end_date_time):
         return self.get_notes().get_filtered_dicts_list(begin_date_time, end_date_time)
-
-    # def get_filtered_notes(self):
-    #     return self.get_notes().get_filtered_dicts_list()
 
     def load(self, file_name):
         objs = self.get_notes().load(file_name)

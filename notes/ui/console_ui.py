@@ -47,7 +47,6 @@ class ConsoleUI:
     def edit_text_note(self):
         try:
             nid = int(input("Введите индивидуальный номер (id) заметки: "))
-            print(type(nid))
             if self.get_presenter().is_find_text_note(nid):
                 content_text_note = self.get_presenter().get_content_text_note(nid)
                 title = inline.input("Отредактируйте заголовок заметки:\n", inp=content_text_note.get("title"))
