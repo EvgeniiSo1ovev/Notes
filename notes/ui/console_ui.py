@@ -50,8 +50,9 @@ class ConsoleUI:
             if self.get_presenter().is_find_text_note(nid):
                 content_text_note = self.get_presenter().get_content_text_note(nid)
                 i_input = inline.input
-                title = i_input(prefix="Отредактируйте заголовок заметки:\n", inp=content_text_note.get("title"))
-                text = i_input(prefix="Отредактируйте тело заметки:\n", inp=content_text_note.get("text"))
+                title = i_input(prefix="Отредактируйте заголовок заметки: ", timer=False,
+                                inp=content_text_note.get("title"))
+                text = i_input(prefix="Отредактируйте тело заметки: ", inp=content_text_note.get("text"))
                 if self.get_presenter().edit_text_note(nid, title, text):
                     msg = "Заметка отредактирована и добавлена в список заметок." \
                           "\nСписок заметок готов для дальнейшего сохранения в файл."
@@ -105,7 +106,7 @@ class ConsoleUI:
                 result += "\n------------------------"
             print(result)
         except ValueError:
-            print("Введено что-то отличное от индивидуального номера (id) заметки.")
+            print("Введено что-то отличное от даты/время формата ДД.ММ.ГГГГ Час:Мин.")
 
     def print_text_note(self):
         try:
