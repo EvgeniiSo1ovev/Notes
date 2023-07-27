@@ -1,6 +1,5 @@
 from ui.menu import Menu
 from datetime import datetime
-import inline
 
 
 class ConsoleUI:
@@ -49,10 +48,8 @@ class ConsoleUI:
             nid = int(input("Введите индивидуальный номер (id) заметки: "))
             if self.get_presenter().is_find_text_note(nid):
                 content_text_note = self.get_presenter().get_content_text_note(nid)
-                i_input = inline.input
-                title = i_input(prefix="Отредактируйте заголовок заметки: ", timer=False,
-                                inp=content_text_note.get("title"))
-                text = i_input(prefix="Отредактируйте тело заметки: ", inp=content_text_note.get("text"))
+                title = input(f"Старый заголовок заметки: {content_text_note.get('title')}\nНовый заголовок заметки: ")
+                text = input(f"Старое тело заметки: {content_text_note.get('text')}\nНовое тело заметки: ")
                 if self.get_presenter().edit_text_note(nid, title, text):
                     msg = "Заметка отредактирована и добавлена в список заметок." \
                           "\nСписок заметок готов для дальнейшего сохранения в файл."
@@ -121,6 +118,6 @@ class ConsoleUI:
                 result += "\n------------------------"
                 print(result)
             else:
-                print("Введен неверный индивидуальный номер (id) заметки.")
+                print("Введен неверный индивидуальный номер (id) заметки или заметка уже удалена.")
         except ValueError:
             print("Введено что-то отличное от индивидуального номера (id) заметки.")
