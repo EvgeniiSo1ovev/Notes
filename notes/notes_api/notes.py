@@ -78,6 +78,7 @@ class Notes:
 
     def save(self, file_name):
         objs = {'notes': self.to_dicts_list(self.get_note_list()), 'unique_id': self.get_unique_id()}
+        print(objs)
         f_h = FileHandler()
         return f_h.write_to_json(file_name, objs)
 
