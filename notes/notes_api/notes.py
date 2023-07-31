@@ -75,7 +75,7 @@ class Notes:
 
     def load(self, file_name):
         objs = FileHandler().read_from_json(file_name)
-        print(objs)
+        print(self.to_text_note(objs.get('notes')))
         return None if objs == None else [self.to_text_note(objs.get('notes')), objs.get('unique_id')]
 
     def save(self, file_name):
