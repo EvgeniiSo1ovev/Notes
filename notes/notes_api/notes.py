@@ -69,11 +69,13 @@ class Notes:
     def to_text_note(dicts):
         result = []
         for t_n in dicts:
-            result.append(TextNote(t_n.get("id"), t_n.get("title"), t_n.get("text"), t_n.get("date_time")))
+            result.append(TextNote(t_n.get("id"), t_n.get("title"), t_n.get("text"),
+                                   datetime.strptime(t_n.get("date_time"), '%Y-%m-%d %H:%M:%S')))
         return result
 
     def load(self, file_name):
         objs = FileHandler().read_from_json(file_name)
+        print(objs)
         return None if objs == None else [self.to_text_note(objs.get('notes')), objs.get('unique_id')]
 
     def save(self, file_name):
