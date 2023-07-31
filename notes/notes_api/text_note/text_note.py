@@ -17,6 +17,9 @@ class TextNote:
     def get_date_time(self):
         return self.__date_time
 
+    def get_str_date_time(self):
+        return self.get_date_time().isoformat(" ")
+
     def set_title(self, title):
         self.__title = title
 
@@ -28,4 +31,4 @@ class TextNote:
 
     def to_dict(self):
         return {"id": self.get_id(), "title": self.get_title(), "text": self.get_text(),
-                "date_time": self.get_date_time()}
+                "date_time": self.get_str_date_time()}
