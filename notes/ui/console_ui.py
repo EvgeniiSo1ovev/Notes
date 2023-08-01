@@ -93,9 +93,9 @@ class ConsoleUI:
     def print_note_list(self):
         try:
             str_begin_date_time = input("Введите начало периода создания/изменения заметок (ДД.ММ.ГГГГ Час:Мин): ")
-            begin_date_time = datetime.strptime(str_begin_date_time + ":00", '%d.%m.%Y %H:%M:%S')
+            begin_date_time = datetime.strptime(str_begin_date_time + ":00.000000", '%d.%m.%Y %H:%M:%S.%f')
             str_end_date_time = input("Введите окончание периода создания/изменения заметок (ДД.ММ.ГГГГ Час:Мин): ")
-            end_date_time = datetime.strptime(str_end_date_time + ":59", '%d.%m.%Y %H:%M:%S')
+            end_date_time = datetime.strptime(str_end_date_time + ":59.999999", '%d.%m.%Y %H:%M:%S.%f')
             result = "------------------------"
             for t_n in self.get_presenter().get_filtered_notes(begin_date_time, end_date_time):
                 result += f"\nИндивидуальный номер: {t_n.get('id')}" \

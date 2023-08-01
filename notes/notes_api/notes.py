@@ -28,32 +28,20 @@ class Notes:
         return False if self.find_text_note(nid) == None else True
 
     def add_text_note(self, title, text):
-        try:
-            self.get_note_list().append(TextNote(self.get_unique_id(), title, text, datetime.now()))
-            self.set_unique_id()
-            return True
-        except Exception as e:
-            FileHandler().check_errors(e)
-            return False
+        self.get_note_list().append(TextNote(self.get_unique_id(), title, text, datetime.now()))
+        self.set_unique_id()
+        return True
 
     def edit_text_note(self, nid, title, text):
-        try:
-            text_note = self.find_text_note(nid)
-            text_note.set_title(title)
-            text_note.set_text(text)
-            text_note.set_date_time(datetime.now())
-            return True
-        except Exception as e:
-            FileHandler().check_errors(e)
-            return False
+        text_note = self.find_text_note(nid)
+        text_note.set_title(title)
+        text_note.set_text(text)
+        text_note.set_date_time(datetime.now())
+        return True
 
     def delete_text_note(self, nid):
-        try:
-            self.get_note_list().remove(self.find_text_note(nid))
-            return True
-        except Exception as e:
-            FileHandler().check_errors(e)
-            return False
+        self.get_note_list().remove(self.find_text_note(nid))
+        return True
 
     def get_content_text_note(self, nid):
         return self.find_text_note(nid).to_dict()
@@ -70,12 +58,11 @@ class Notes:
         result = []
         for t_n in dicts:
             result.append(TextNote(t_n.get("id"), t_n.get("title"), t_n.get("text"),
-                                   datetime.strptime(t_n.get("date_time"), '%Y-%m-%d %H:%M:%S')))
+                                   datetime.strptime(t_n.get("date_time"), '%Y-%m-%d %H:%M:%S.%f')))
         return result
 
     def load(self, file_name):
         objs = FileHandler().read_from_json(file_name)
-        print(self.to_text_note(objs.get('notes')))
         return None if objs == None else [self.to_text_note(objs.get('notes')), objs.get('unique_id')]
 
     def save(self, file_name):

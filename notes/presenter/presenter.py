@@ -37,7 +37,6 @@ class Presenter:
 
     def load(self, file_name):
         objs = self.get_notes().load(file_name)
-        # print(objs)
         return False if objs == None else self.set_notes(Notes(objs[0], objs[1]))
 
     def save(self, file_name):

@@ -5,7 +5,7 @@ class FileHandler:
     def write_to_json(self, file_name, obj):
         try:
             with open(file_name, 'w', encoding='utf-8') as f_n:
-                json.dump(obj, f_n, sort_keys=True, indent=4)
+                json.dump(obj, f_n, indent=4)
             return True
         except Exception as e:
             self.check_errors(e)
